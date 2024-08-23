@@ -1,17 +1,13 @@
 package com.graso.taco_cloud;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
-
-import com.graso.taco_cloud.Ingredient.Type;
 
 @Component
 public class IngredientByIdConverter implements Converter<String, Ingredient> {
 
-    private Map<String, Ingredient> ingredientMap = new HashMap<>();
+    /*private Map<String, Ingredient> ingredientMap = new HashMap<>();
 
     public IngredientByIdConverter() {
         ingredientMap.put("FLTO",
@@ -34,10 +30,21 @@ public class IngredientByIdConverter implements Converter<String, Ingredient> {
                 new Ingredient("SLSA", "Salsa", Type.SAUCE));
         ingredientMap.put("SRCR",
                 new Ingredient("SRCR", "Sour Cream", Type.SAUCE));
+    }*/
+
+    private IngredientRepository ingredientRepo;
+
+    @Autowired
+    public IngredientByIdConverter(IngredientRepository ingredientRepo){
+        this.ingredientRepo = ingredientRepo;
     }
 
-    @Override
+    /*@Override
     public Ingredient convert(String id) {
         return ingredientMap.get(id);
+    }*/
+    @Override
+    public Ingredient convert(String id){
+        return ingredientRepo.findById(id).orElse(null);
     }
 }

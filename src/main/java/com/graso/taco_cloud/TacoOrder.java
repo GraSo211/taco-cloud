@@ -1,9 +1,13 @@
 package com.graso.taco_cloud;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.validator.constraints.CreditCardNumber;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
@@ -11,7 +15,13 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
-public class TacoOrder {
+@Table
+public class TacoOrder implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    private Long id;
+
+    private Date placedAt;
 
     @NotBlank(message = "Delivery name es requerido.")
     private String deliveryName;
